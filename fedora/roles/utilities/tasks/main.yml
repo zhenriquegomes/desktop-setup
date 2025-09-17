@@ -78,3 +78,17 @@
     name: io.missioncenter.MissionCenter
     state: present
     remote: flathub
+
+- name: Baixar arquivo do repositório SCRCPY
+  become: true
+  get_url:
+    url: https://copr.fedorainfracloud.org/coprs/zeno/scrcpy/repo/fedora-{{ ansible_facts.distribution_major_version }}/zeno-scrcpy-fedora-{{ ansible_facts.distribution_major_version }}.repo
+    dest: /etc/yum.repos.d/zeno-scrcpy.repo
+    mode: '0644'
+    force: no
+
+- name: Instalar SCRCPY
+  become: true
+  dnf:
+    name: scrcpy
+    state: present
