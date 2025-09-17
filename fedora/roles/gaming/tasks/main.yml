@@ -21,7 +21,6 @@
     disable_gpg_check: yes
 
 - name: Instalar Discord
-  become: true
   flatpak:
     name: com.discordapp.Discord
     state: present
