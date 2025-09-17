@@ -1,9 +1,3 @@
-- name: Instalar MissionCenter
-  flatpak:
-    name: io.missioncenter.MissionCenter
-    state: present
-    remote: flathub
-
 - name: Instalar Bitwarden
   flatpak:
     name: com.bitwarden.desktop
@@ -76,5 +70,11 @@
 - name: Instalar MangoJuice
   flatpak:
     name: io.github.radiolamp.mangojuice
+    state: present
+    remote: flathub
+
+- name: Instalar MissionCenter
+  flatpak:
+    name: io.missioncenter.MissionCenter
     state: present
     remote: flathub
