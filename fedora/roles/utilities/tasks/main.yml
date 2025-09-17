@@ -52,3 +52,17 @@
     name: com.github.tchx84.Flatseal
     state: present
     remote: flathub
+
+- name: Baixar arquivo do repositório LinuxToys
+  become: true
+  get_url:
+    url: https://copr.fedorainfracloud.org/coprs/psygreg/linuxtoys/repo/fedora-{{ ansible_facts.distribution_major_version }}/psygreg-linuxtoys-fedora-{{ ansible_facts.distribution_major_version }}.repo
+    dest: /etc/yum.repos.d/psygreg-linuxtoys.repo
+    mode: '0644'
+    force: no
+
+- name: Instalar LinuxToys
+  become: true
+  dnf:
+    name: linuxtoys
+    state: present
