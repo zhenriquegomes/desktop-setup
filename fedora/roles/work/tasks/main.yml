@@ -1,16 +1,16 @@
-- name: Instalar Remmina via Flatpak
+- name: Instalar Remmina
   flatpak:
     name: org.remmina.Remmina
     state: present
     remote: flathub
 
-- name: Instalar Microsoft Teams via Flatpak
+- name: Instalar Microsoft Teams
   flatpak:
     name: com.github.IsmaelMartinez.teams_for_linux
     state: present
     remote: flathub
 
-- name: Instalar Thunderbird via Flatpak
+- name: Instalar Thunderbird
   flatpak:
     name: org.mozilla.Thunderbird
     state: present

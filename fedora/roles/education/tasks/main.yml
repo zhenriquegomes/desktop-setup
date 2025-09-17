@@ -1,4 +1,4 @@
-- name: Instalar Anki via Flatpak
+- name: Instalar Anki
   flatpak:
     name: net.ankiweb.Anki
     state: present
