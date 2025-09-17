@@ -25,3 +25,47 @@
     name: com.discordapp.Discord
     state: present
     remote: flathub
+
+- name: Obter a URL da última release do Heroic
+  uri:
+    url: https://api.github.com/repos/Heroic-Games-Launcher/HeroicGamesLauncher/releases/latest
+    return_content: yes
+  register: heroic_release
+
+- name: Extrair URL do RPM x86_64
+  set_fact:
+    heroic_rpm_url: "{{ (heroic_release.json.assets | selectattr('name','match','Heroic-.*-linux-x86_64\\.rpm') | list)[0].browser_download_url }}"
+
+- name: Baixar o RPM do Heroic
+  get_url:
+    url: "{{ heroic_rpm_url }}"
+    dest: "/tmp/{{ heroic_rpm_url | basename }}"
+    mode: '0644'
+
+- name: Instalar o Heroic
+  dnf:
+    name: "/tmp/{{ heroic_rpm_url | basename }}"
+    state: present
+    disable_gpg_check: yes
+
+- name: Obter a URL da última release do Heroic
+  uri:
+    url: https://api.github.com/repos/hydralauncher/hydra/releases/latest
+    return_content: yes
+  register: hydra_release
+
+- name: Extrair URL do RPM x86_64
+  set_fact:
+    hydra_rpm_url: "{{ (hydra_release.json.assets | selectattr('name','match','hydralauncher-.*x86_64\\.rpm') | list)[0].browser_download_url }}"
+
+- name: Baixar o RPM do Hydra
+  get_url:
+    url: "{{ hydra_rpm_url }}"
+    dest: "/tmp/{{ hydra_rpm_url | basename }}"
+    mode: '0644'
+
+- name: Instalar o Hydra
+  dnf:
+    name: "/tmp/{{ hydra_rpm_url | basename }}"
+    state: present
+    disable_gpg_check: yes
