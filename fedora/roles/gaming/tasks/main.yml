@@ -48,7 +48,7 @@
     state: present
     disable_gpg_check: yes
 
-- name: Obter a URL da última release do Heroic
+- name: Obter a URL da última release do Hydra
   uri:
     url: https://api.github.com/repos/hydralauncher/hydra/releases/latest
     return_content: yes

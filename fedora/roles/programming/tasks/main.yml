@@ -7,6 +7,7 @@
 - name: Definir Zsh como shell padrão do usuário desktop-automate
   become: true
   user:
+    # TODO: pegar usuário nas variáveis de ambiente.
     name: desktop-automate
     shell: /bin/zsh
 
