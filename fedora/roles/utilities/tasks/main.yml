@@ -66,3 +66,15 @@
   dnf:
     name: linuxtoys
     state: present
+
+- name: Instalar Menu Editor
+  flatpak:
+    name: page.codeberg.libre_menu_editor.LibreMenuEditor
+    state: present
+    remote: flathub
+
+- name: Instalar MangoJuice
+  flatpak:
+    name: io.github.radiolamp.mangojuice
+    state: present
+    remote: flathub
