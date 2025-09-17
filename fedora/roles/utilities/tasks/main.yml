@@ -36,15 +36,19 @@
     state: present
 
 - name: Instalar Embellish
-  become: true
   flatpak:
     name: io.github.getnf.embellish
     state: present
     remote: flathub
 
 - name: Instalar Extension Manager
-  become: true
   flatpak:
     name: com.mattjakeman.ExtensionManager
+    state: present
+    remote: flathub
+
+- name: Instalar Flatseal
+  flatpak:
+    name: com.github.tchx84.Flatseal
     state: present
     remote: flathub
