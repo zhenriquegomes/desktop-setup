@@ -1,0 +1,62 @@
+- name: Instalar Zsh
+  become: true
+  dnf:
+    name: zsh
+    state: present
+
+- name: Definir Zsh como shell padrão do usuário desktop-automate
+  become: true
+  user:
+    name: desktop-automate
+    shell: /bin/zsh
+
+# - name: Instalar Oh My Zsh para desktop-automate
+#   become: false
+#   become_user: desktop-automate
+#   shell: |
+#     export RUNZSH=no
+#     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+#   args:
+#     creates: /home/desktop-automate/.oh-my-zsh
+
+- name: Baixar arquivo do repositório LazyGit
+  become: true
+  get_url:
+    url: https://copr.fedorainfracloud.org/coprs/dejan/lazygit/repo/fedora-{{ ansible_facts.distribution_major_version }}/dejan-lazygit-fedora-{{ ansible_facts.distribution_major_version }}.repo
+    dest: /etc/yum.repos.d/dejan-lazygit.repo
+    mode: '0644'
+    force: no
+
+- name: Instalar Lazygit
+  become: true
+  dnf:
+    name: lazygit
+    state: present
+
+- name: Instalar dependências LunarVim
+  become: true
+  dnf:
+    name:
+      - git
+      - make
+      - python3-pip
+      - python3
+      - npm
+      - nodejs
+      - cargo
+      - ripgrep
+    state: present
+
+- name: Instalar Neovim
+  become: true
+  dnf:
+    name: neovim
+    state: latest
+
+# - name: Instalar LunarVim
+#   become: false
+#   shell: |
+#     LV_BRANCH='release-1.4/neovim-0.9' \
+#     bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.4/neovim-0.9/utils/installer/install.sh)
+#   args:
+#     executable: /bin/bash
