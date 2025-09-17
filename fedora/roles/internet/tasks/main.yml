@@ -1,11 +1,18 @@
-- name: Instalar Brave via Flatpak
+- name: Instalar Brave
   flatpak:
     name: com.brave.Browser
     state: present
     remote: flathub
 
-- name: Instalar WebApps via Flatpak
+- name: Instalar WebApps
   flatpak:
     name: net.codelogistics.webapps
     state: present
     remote: flathub
+
+- name: Instalar FreeTube
+  flatpak:
+    name: io.freetubeapp.FreeTube
+    state: present
+    remote: flathub
+
