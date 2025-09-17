@@ -4,21 +4,22 @@
     name: zsh
     state: present
 
-- name: Definir Zsh como shell padrão do usuário desktop-automate
+- name: Definir Zsh como shell padrão do usuário {{ desktop_user }}
   become: true
   user:
-    # TODO: pegar usuário nas variáveis de ambiente.
-    name: desktop-automate
+    name: "{{ desktop_user }}"
     shell: /bin/zsh
 
-# - name: Instalar Oh My Zsh para desktop-automate
-#   become: false
-#   become_user: desktop-automate
-#   shell: |
-#     export RUNZSH=no
-#     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-#   args:
-#     creates: /home/desktop-automate/.oh-my-zsh
+- name: Instalar Oh My Zsh de forma não interativa
+  become: false
+  become_user: "{{ desktop_user }}"
+  shell: |
+    export RUNZSH=no
+    export CHSH=no
+    curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -o /tmp/ohmyzsh-install.sh
+    sh /tmp/ohmyzsh-install.sh
+  args:
+    creates: /home/{{ desktop_user }}/.oh-my-zsh
 
 - name: Baixar arquivo do repositório LazyGit
   become: true
@@ -40,6 +41,7 @@
     name:
       - git
       - make
+      - neovim
       - python3-pip
       - python3
       - npm
@@ -48,16 +50,24 @@
       - ripgrep
     state: present
 
-- name: Instalar Neovim
+- name: Instalar plugin neovim para Node.js (npm global)
   become: true
-  dnf:
+  npm:
     name: neovim
-    state: latest
+    global: yes
 
-# - name: Instalar LunarVim
-#   become: false
-#   shell: |
-#     LV_BRANCH='release-1.4/neovim-0.9' \
-#     bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.4/neovim-0.9/utils/installer/install.sh)
-#   args:
-#     executable: /bin/bash
+- name: Instalar LunarVim de forma não interativa
+  become: false
+  become_user: "{{ desktop_user }}"
+  shell: |
+    export LV_BRANCH='release-1.4/neovim-0.9'
+    bash <(curl -fsSL https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.4/neovim-0.9/utils/installer/install.sh) -y --install-dependencies
+  args:
+    creates: /home/{{ desktop_user }}/.local/share/lunarvim
+  ignore_errors: true
+
+- name: Sincronizar plugins do LunarVim
+  become: false
+  become_user: "{{ desktop_user }}"
+  shell: |
+    /home/{{ desktop_user }}/.local/bin/lvim --headless "+Lazy! sync" +qall
