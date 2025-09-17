@@ -71,3 +71,9 @@
   become_user: "{{ desktop_user }}"
   shell: |
     /home/{{ desktop_user }}/.local/bin/lvim --headless "+Lazy! sync" +qall
+
+- name: Instalar Podman
+  flatpak:
+    name: io.podman_desktop.PodmanDesktop
+    state: present
+    remote: flathub
