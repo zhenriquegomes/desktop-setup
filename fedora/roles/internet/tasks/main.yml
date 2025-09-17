@@ -16,3 +16,8 @@
     state: present
     remote: flathub
 
+- name: Instalar Kotatogram
+  flatpak:
+    name: io.github.kotatogram
+    state: present
+    remote: flathub
