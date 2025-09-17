@@ -69,3 +69,30 @@
     name: "/tmp/{{ hydra_rpm_url | basename }}"
     state: present
     disable_gpg_check: yes
+
+- name: Obter versão do Fedora
+  command: rpm -E %fedora
+  register: fedora_version
+  changed_when: false
+
+- name: Instalar RPM Fusion Free e Non-Free
+  become: true
+  shell: >
+    dnf install -y
+    https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ fedora_version.stdout }}.noarch.rpm
+    https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ fedora_version.stdout }}.noarch.rpm
+  args:
+    creates: /etc/yum.repos.d/rpmfusion-free.repo
+
+- name: Habilitar fedora-cisco-openh264 se não estiver habilitado
+  become: true
+  command: dnf config-manager --setopt=fedora-cisco-openh264.enabled=1
+  args:
+    creates: /etc/dnf/dnf.conf
+  register: enable_openh264
+  failed_when: false
+
+- name: Instalar Steam
+  dnf:
+    name: steam
+    state: present
