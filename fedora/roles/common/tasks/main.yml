@@ -9,10 +9,10 @@
       fastestmirror=True
       max_parallel_downloads=10
 
-- name: Instalar pacotes básicos
+- name: Instalar ferramentas de desenvolvimento do Fedora
+  become: true
   dnf:
     name:
-      - neovim
-      - git
-      - curl
+      - "@C Development Tools and Libraries"
+      - "@Development Tools"
     state: present
