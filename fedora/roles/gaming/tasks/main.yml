@@ -96,3 +96,15 @@
   dnf:
     name: steam
     state: present
+
+- name: Instalar ProtonPlus
+  flatpak:
+    name: com.vysp3r.ProtonPlus
+    state: present
+    remote: flathub
+
+- name: Instalar Roblox
+  flatpak:
+    name: org.vinegarhq.Sober
+    state: present
+    remote: flathub
