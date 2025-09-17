@@ -1,9 +1,3 @@
-- name: Instalar Remmina
-  flatpak:
-    name: org.remmina.Remmina
-    state: present
-    remote: flathub
-
 - name: Instalar Microsoft Teams
   flatpak:
     name: com.github.IsmaelMartinez.teams_for_linux
@@ -13,5 +7,17 @@
 - name: Instalar Thunderbird
   flatpak:
     name: org.mozilla.Thunderbird
+    state: present
+    remote: flathub
+
+- name: Instalar OnlyOffice
+  flatpak:
+    name: org.onlyoffice.desktopeditors
+    state: present
+    remote: flathub
+
+- name: Instalar Remmina
+  flatpak:
+    name: org.remmina.Remmina
     state: present
     remote: flathub
