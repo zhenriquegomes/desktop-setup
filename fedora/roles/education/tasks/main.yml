@@ -1,0 +1,5 @@
+- name: Instalar Anki via Flatpak
+  flatpak:
+    name: net.ankiweb.Anki
+    state: present
+    remote: flathub

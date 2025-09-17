@@ -1,0 +1,11 @@
+- name: Instalar Brave via Flatpak
+  flatpak:
+    name: com.brave.Browser
+    state: present
+    remote: flathub
+
+- name: Instalar WebApps via Flatpak
+  flatpak:
+    name: net.codelogistics.webapps
+    state: present
+    remote: flathub

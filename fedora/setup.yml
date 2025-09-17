@@ -1,0 +1,11 @@
+- name: Configuração inicial da VM
+  hosts: myvm
+  become: true
+  roles:
+    - common
+    - education
+    - gaming
+    - gpu
+    - internet
+    - utilities
+    - work

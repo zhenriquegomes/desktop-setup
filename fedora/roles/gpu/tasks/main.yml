@@ -1,0 +1,54 @@
+- name: Obter versão do Fedora
+  command: rpm -E %fedora
+  register: fedora_version
+  changed_when: false
+
+- name: Instalar RPM Fusion Free e Non-Free
+  become: true
+  shell: >
+    dnf install -y
+    https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ fedora_version.stdout }}.noarch.rpm
+    https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ fedora_version.stdout }}.noarch.rpm
+  args:
+    creates: /etc/yum.repos.d/rpmfusion-free.repo
+
+- name: Atualizar cache do DNF
+  dnf:
+    update_cache: yes
+
+- name: Instalar dependências do kernel
+  dnf:
+    name:
+      - kernel-devel
+      - kernel-headers
+      - gcc
+    state: present
+
+- name: Instalar drivers NVIDIA e utilitários
+  dnf:
+    name:
+      - akmod-nvidia
+      - xorg-x11-drv-nvidia-cuda
+      - nvidia-settings
+    state: present
+
+- name: Baixar arquivo do repositório LACT
+  become: true
+  get_url:
+    url: https://copr.fedorainfracloud.org/coprs/ilyaz/LACT/repo/fedora-{{ ansible_facts.distribution_major_version }}/ilyaz-LACT-fedora-{{ ansible_facts.distribution_major_version }}.repo
+    dest: /etc/yum.repos.d/ilyaz-LACT.repo
+    mode: '0644'
+    force: no
+
+- name: Instalar LACT
+  become: true
+  dnf:
+    name: lact
+    state: present
+
+- name: Habilitar e iniciar serviço lactd
+  become: true
+  systemd:
+    name: lactd
+    enabled: yes
+    state: started

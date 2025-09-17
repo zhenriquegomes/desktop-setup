@@ -1,0 +1,43 @@
+- name: Instalar MissionCenter via Flatpak
+  flatpak:
+    name: io.missioncenter.MissionCenter
+    state: present
+    remote: flathub
+
+- name: Instalar Bitwarden via Flatpak
+  flatpak:
+    name: com.bitwarden.desktop
+    state: present
+    remote: flathub
+
+- name: Instalar Bottles via Flatpak
+  flatpak:
+    name: com.usebottles.bottles
+    state: present
+    remote: flathub
+
+- name: Baixar o repositório Cloudflare Warp
+  become: true
+  get_url:
+    url: https://pkg.cloudflareclient.com/cloudflare-warp-ascii.repo
+    dest: /etc/yum.repos.d/cloudflare-warp.repo
+    mode: '0644'
+    force: no
+
+- name: Atualizar cache do DNF
+  become: true
+  dnf:
+    update_cache: yes
+
+- name: Instalar Cloudflare Warp
+  become: true
+  dnf:
+    name: cloudflare-warp
+    state: present
+
+- name: Instalar Embellish
+  become: true
+  flatpak:
+    name: io.github.getnf.embellish
+    state: present
+    remote: flathub

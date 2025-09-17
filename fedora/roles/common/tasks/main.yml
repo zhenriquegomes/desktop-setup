@@ -1,0 +1,18 @@
+- name: Configurar DNF para downloads mais rápidos
+  become: true
+  blockinfile:
+    path: /etc/dnf/dnf.conf
+    create: yes
+    block: |
+      # see `man dnf.conf` for defaults and possible options
+      [main]
+      fastestmirror=True
+      max_parallel_downloads=10
+
+- name: Instalar pacotes básicos
+  dnf:
+    name:
+      - neovim
+      - git
+      - curl
+    state: present

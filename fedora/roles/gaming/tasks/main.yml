@@ -1,0 +1,28 @@
+- name: Obter a URL da última release do lsfg-vk
+  uri:
+    url: https://api.github.com/repos/PancakeTAS/lsfg-vk/releases/latest
+    return_content: yes
+  register: lsfg_release
+
+- name: Extrair URL do RPM x86_64
+  set_fact:
+    lsfg_rpm_url: "{{ (lsfg_release.json.assets | selectattr('name','match','lsfg-vk-.*\\.x86_64\\.rpm') | list)[0].browser_download_url }}"
+
+- name: Baixar o RPM do lsfg-vk
+  get_url:
+    url: "{{ lsfg_rpm_url }}"
+    dest: "/tmp/{{ lsfg_rpm_url | basename }}"
+    mode: '0644'
+
+- name: Instalar o lsfg-vk
+  dnf:
+    name: "/tmp/{{ lsfg_rpm_url | basename }}"
+    state: present
+    disable_gpg_check: yes
+
+- name: Instalar Discord
+  become: true
+  flatpak:
+    name: com.discordapp.Discord
+    state: present
+    remote: flathub
