@@ -11,3 +11,9 @@
       - com.stremio.Service
     state: present
     remote: flathub
+
+- name: Instalar VLC
+  flatpak:
+    name: org.videolan.VLC
+    state: present
+    remote: flathub
