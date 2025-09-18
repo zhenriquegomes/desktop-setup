@@ -92,3 +92,9 @@
   dnf:
     name: scrcpy
     state: present
+
+- name: Instalar GNOME Tweaks
+  become: true
+  dnf:
+    name: gnome-tweaks
+    state: present
