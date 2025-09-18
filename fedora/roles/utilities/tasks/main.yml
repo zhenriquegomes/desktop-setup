@@ -98,3 +98,10 @@
   dnf:
     name: gnome-tweaks
     state: present
+
+- name: Instalar Wardrobe
+  become: true
+  flatpak:
+    name: io.github.swordpuffin.wardrobe
+    state: present
+    remote: flathub
