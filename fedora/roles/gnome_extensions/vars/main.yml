@@ -1,0 +1,22 @@
+gnome_extensions:
+  - name: ArcMenu
+    url: "https://extensions.gnome.org/extension-data/arcmenuarcmenu.com.v68.shell-extension.zip"
+    uuid: ""
+  - name: Dash to Panel
+    url: "https://extensions.gnome.org/extension-data/dash-to-paneljderose9.github.com.v70.shell-extension.zip"
+    uuid: ""
+  - name: GSConnect
+    url: "https://extensions.gnome.org/extension-data/gsconnectandyholmes.github.io.v66.shell-extension.zip"
+    uuid: ""
+  - name: Quick Settings Audio Devices Hider
+    url: "https://extensions.gnome.org/extension-data/quicksettings-audio-devices-hidermarcinjahn.com.v16.shell-extension.zip"
+    uuid: ""
+  - name: Quick Settings Audio Devices Renamer
+    url: "https://extensions.gnome.org/extension-data/quicksettings-audio-devices-renamermarcinjahn.com.v6.shell-extension.zip"
+    uuid: ""
+  - name: User Themes
+    url: "https://extensions.gnome.org/extension-data/user-themegnome-shell-extensions.gcampax.github.com.v64.shell-extension.zip"
+    uuid: ""
+  - name: AppIndicator
+    url: "https://extensions.gnome.org/extension-data/appindicatorsupportrgcjonas.gmail.com.v61.shell-extension.zip"
+    uuid: ""
