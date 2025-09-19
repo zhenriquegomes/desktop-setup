@@ -16,3 +16,17 @@
       - "@C Development Tools and Libraries"
       - "@Development Tools"
     state: present
+
+- name: Baixar arquivo do repositório Topgrade
+  become: true
+  get_url:
+    url: https://copr.fedorainfracloud.org/coprs/lilay/topgrade/repo/fedora-{{ ansible_facts.distribution_major_version }}/lilay-topgrade-fedora-{{ ansible_facts.distribution_major_version }}.repo
+    dest: /etc/yum.repos.d/lilay-topgrade.repo
+    mode: '0644'
+    force: no
+
+- name: Instalar Topgrade
+  become: true
+  dnf:
+    name: topgrade
+    state: present
