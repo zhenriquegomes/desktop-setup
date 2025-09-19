@@ -1,0 +1,61 @@
+- name: Criar diretório de Pictures
+  file:
+    path: /home/{{ desktop_user }}/Pictures
+    state: directory
+    owner: "{{ desktop_user }}"
+    group: "{{ desktop_user }}"
+    mode: '0755'
+
+- name: Copiar imagem do papel de parede
+  copy:
+    src: "files/{{ wallpaper_file }}"
+    dest: "/home/{{ desktop_user }}/Pictures/{{ wallpaper_file }}"
+    owner: "{{ desktop_user }}"
+    group: "{{ desktop_user }}"
+    mode: '0644'
+
+- name: Copiar foto de perfil para .face
+  copy:
+    src: "files/{{ profile_photo }}"
+    dest: "/home/{{ desktop_user }}/.face"
+    owner: "{{ desktop_user }}"
+    group: "{{ desktop_user }}"
+    mode: '0644'
+
+- name: Configurar papel de parede
+  become: true
+  become_user: "{{ desktop_user }}"
+  command: >
+    dbus-run-session gsettings set org.gnome.desktop.background picture-uri
+    "file:///home/{{ desktop_user }}/Pictures/{{ wallpaper_file }}"
+
+- name: Configurar opções do papel de parede
+  become: true
+  become_user: "{{ desktop_user }}"
+  command: >
+    dbus-run-session gsettings set org.gnome.desktop.background picture-options 'zoom'
+
+- name: Configurar papel de parede da tela de bloqueio
+  become: true
+  become_user: "{{ desktop_user }}"
+  command: >
+    dbus-run-session gsettings set org.gnome.desktop.screensaver picture-uri
+    "file:///home/{{ desktop_user }}/Pictures/{{ wallpaper_file }}"
+
+- name: Copiar avatar para AccountsService
+  copy:
+    src: "files/{{ profile_photo }}"
+    dest: "/var/lib/AccountsService/icons/{{ desktop_user }}"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Configurar AccountsService para usar avatar
+  lineinfile:
+    path: "/var/lib/AccountsService/users/{{ desktop_user }}"
+    regexp: '^Icon='
+    line: "Icon=/var/lib/AccountsService/icons/{{ desktop_user }}"
+    create: yes
+    owner: root
+    group: root
+    mode: '0644'

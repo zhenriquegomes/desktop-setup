@@ -1,5 +1,5 @@
 - name: Configuração inicial da VM
-  hosts: myvm
+  hosts: local
   become: true
   roles:
     - common
@@ -9,6 +9,7 @@
     - gpu
     - internet
     - programming
+    - profile
     - utilities
     - video
     - work
