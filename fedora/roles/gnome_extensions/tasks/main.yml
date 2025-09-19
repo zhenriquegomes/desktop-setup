@@ -1,3 +1,9 @@
+- name: Instalar Extension Manager
+  flatpak:
+    name: com.mattjakeman.ExtensionManager
+    state: present
+    remote: flathub
+
 - name: Criar diretório base de extensões
   file:
     path: "/home/{{ desktop_user }}/.local/share/gnome-shell/extensions"

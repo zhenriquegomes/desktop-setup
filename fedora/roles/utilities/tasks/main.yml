@@ -35,12 +35,6 @@
     state: present
     remote: flathub
 
-- name: Instalar Extension Manager
-  flatpak:
-    name: com.mattjakeman.ExtensionManager
-    state: present
-    remote: flathub
-
 - name: Instalar Flatseal
   flatpak:
     name: com.github.tchx84.Flatseal
